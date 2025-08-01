@@ -5,7 +5,6 @@ import os
 import subprocess
 from datetime import datetime
 import threading
-import sys
 
 class NetworkScannerCLI:
     def __init__(self):
@@ -57,11 +56,11 @@ class NetworkScannerCLI:
 
         def is_host_up(ip):
             try:
-                # Ping once
+                # Ping once, timeout 1 second
                 subprocess.check_output(['ping', '-c', '1', '-W', '1', ip], stderr=subprocess.DEVNULL)
                 return True
             except:
-                # Check common ports
+                # Check common ports if ping fails
                 for port in [22, 80, 443]:
                     try:
                         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -114,7 +113,8 @@ class NetworkScannerCLI:
             for port in ports:
                 if self.stop_flag:
                     break
-                self.log(f"Checking port {port}...", end="\r")
+                # Use direct print with carriage return for smooth scanning display
+                print(f"Checking port {port}...", end="\r", flush=True)
                 result = self.scan_port(ip, port)
                 if result and result[1] == "Open":
                     self.log(f"Port {result[0]}: {result[1]}")
@@ -185,6 +185,7 @@ class NetworkScannerCLI:
 
         conn.commit()
         conn.close()
+
 
 if __name__ == "__main__":
     scanner = NetworkScannerCLI()
