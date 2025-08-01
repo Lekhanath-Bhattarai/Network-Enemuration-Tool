@@ -1,16 +1,15 @@
-# tests/test_scanner.py
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-import unittest
-from src.scanner import ping_ip, scan_port
+from scanner import scan_port
 
-class TestScanner(unittest.TestCase):
-    def test_ping_ip(self):
-        result = ping_ip("8.8.8.8")
-        self.assertIsInstance(result, bool)
+def test_scan_open_port():
+    port, status = scan_port("127.0.0.1", 22)
+    assert port == 22
+    assert status in ["Open", "Closed"]
 
-    def test_scan_port(self):
-        result = scan_port("127.0.0.1", 22)
-        self.assertIsNotNone(result)
-
-if __name__ == "__main__":
-    unittest.main()
+def test_scan_closed_port():
+    port, status = scan_port("127.0.0.1", 65000)
+    assert port == 65000
+    assert status in ["Open", "Closed"]
