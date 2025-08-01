@@ -21,8 +21,8 @@ Simple, fast, and effective for your pentesting or network audit needs! 🔍🚀
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/<your-username>/<repo-name>.git
-   cd <repo-name>
+   git clone https://github.com/Lekhanath-Bhattarai/Network-Enemuration-Tool.git
+   cd Network-Enemuration-Tool
 2. Create and activate a virtual environment (optional but recommended):
 	python3 -m venv venv
 	source venv/bin/activate   # Windows: venv\Scripts\activate
